@@ -17,7 +17,7 @@ export default function ResultsPage() {
 
   useEffect(() => {
     fetch('/api/results')
-      .then((r) => r.json())
+      .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
       .then((d) => { setData(d); setLoading(false); })
       .catch(() => { setError('Failed to load results.'); setLoading(false); });
   }, []);
